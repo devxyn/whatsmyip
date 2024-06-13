@@ -5,7 +5,7 @@ import axios from 'axios';
 import { initialState, geoReducer } from '../reducers/geoDataReducer';
 import Map from '../component/Map';
 import GeoData from '../component/GeoData';
-import useCheckHistory from './../hook/useCheckHistory';
+import useCheckHistory from './../hooks/useCheckHistory';
 
 const Home = () => {
   const [ip, setIp] = useState('');
