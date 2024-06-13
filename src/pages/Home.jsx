@@ -1,20 +1,33 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react-hooks/exhaustive-deps */
-import axios from 'axios';
 import { useEffect, useReducer, useState } from 'react';
-import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { initialState, geoReducer } from '../reducers/geoDataReducer';
 import Map from '../component/Map';
 import GeoData from '../component/GeoData';
+import useCheckHistory from './../hook/useCheckHistory';
 
 const Home = () => {
   const [ip, setIp] = useState('');
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
   const [selectedItems, setSelectedItems] = useState([]);
+  const [history, setHistory] = useState(useCheckHistory);
   const [geoState, geoDispatch] = useReducer(geoReducer, initialState);
-  const [cookies, setCookies] = useCookies(['access_token']);
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchGeoData();
+
+    const savedItem = window.localStorage.getItem('history');
+    const savedHistory = JSON.parse(savedItem);
+    setHistory(savedHistory);
+  }, []);
+
+  useEffect(() => {
+    const jsonString = JSON.stringify(history);
+    if (history) {
+      window.localStorage.setItem('history', jsonString);
+    }
+  }, [history]);
 
   const fetchGeoData = async () => {
     try {
@@ -28,14 +41,6 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    if (!cookies.access_token) {
-      navigate('/login');
-    }
-
-    fetchGeoData();
-  }, []);
-
   const handleSearch = async (input) => {
     try {
       const response = await axios.get(`https://ipinfo.io/${input}/geo`);
@@ -44,8 +49,8 @@ const Home = () => {
       setLocation({ lat: parseFloat(loc[0]), lng: parseFloat(loc[1]) });
       setIp(input);
 
-      if (!geoState.history.includes(response.data.ip)) {
-        geoDispatch({ type: 'ADD_HISTORY', payload: response.data.ip });
+      if (!history.includes(response.data.ip)) {
+        setHistory((prev) => [...prev, response.data.ip]);
       }
     } catch (error) {
       console.error(error);
@@ -67,13 +72,9 @@ const Home = () => {
   };
 
   const handleDeleteSelected = () => {
-    geoDispatch({ type: 'DELETE_HISTORY', payload: selectedItems });
+    const updatedHistory = history.filter((item) => !selectedItems.includes(item));
+    setHistory(updatedHistory);
     setSelectedItems([]);
-  };
-
-  const handleLogOut = () => {
-    setCookies('access_token', '');
-    navigate('/login');
   };
 
   return (
@@ -81,9 +82,6 @@ const Home = () => {
       <div className='flex flex-col gap-5 mb-10  lg:mb-0 lg:gap-10 lg:bg-primary lg:w-[25%] lg:p-10'>
         <div className='flex flex-row items-center justify-between mb-5'>
           <h1 className='text-3xl font-bold'>What's my IP?</h1>
-          <button className='bg-secondary rounded-lg px-4 py-3' onClick={handleLogOut}>
-            Logout
-          </button>
         </div>
 
         <div className='flex flex-col items-center gap-2'>
@@ -116,19 +114,19 @@ const Home = () => {
           </div>
         </div>
 
-        {!!geoState.history.length && (
+        {history && (
           <div className='mb-5'>
             <div className='flex flexrow justify-between items-center'>
               <h4 className='text-xl'>Search History</h4>
               <button
                 onClick={handleDeleteSelected}
-                disabled={selectedItems.length === 0}
-                className='px-4 py-2 text-xl bg-secondary rounded-lg text-red-400 font-semibold hover:text-red-600 hover:underline'>
+                disabled={!history || history.length === 0}
+                className='px-4 py-2 text-xl bg-secondary rounded-lg text-red-600  font-semibold '>
                 Delete
               </button>
             </div>
             <ul className='pl-5'>
-              {geoState.history.map((item, index) => (
+              {history.map((item, index) => (
                 <li className=' list-disc text-lg flex flex-row items-center gap-2' key={index}>
                   <input
                     type='checkbox'
