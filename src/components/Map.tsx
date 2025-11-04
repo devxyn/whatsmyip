@@ -29,12 +29,15 @@ const Map = () => {
   const { latitude, longitude } = parseLocation(ipData?.loc);
 
   if (!ipData || !latitude || !longitude) {
-    return <div className='w-1/2 flex-1 border-l border-light-border' />;
+    return <div className='w-full lg:w-1/2 flex-1 border-l border-light-border min-h-[250px]' />;
   }
 
   return (
-    <div className='flex-1 w-1/2 h-auto border-l border-light-border'>
-      <MapContainer center={[latitude, longitude]} zoom={15} style={{ height: "100%", width: "100%" }}>
+    <div className='flex-1 w-full lg:w-1/2 h-full xs:h-[350px] sm:h-[400px] lg:h-auto border-l border-light-border min-h-[250px] px-5 lg:px-0 pb-5 lg:pb-0'>
+      <MapContainer
+        center={[latitude, longitude]}
+        zoom={17}
+        className='h-full w-full min-h-[600px] rounded-lg lg:rounded-none'>
         <TileLayer
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
