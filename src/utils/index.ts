@@ -17,8 +17,5 @@ export const parseLocation = (loc: string | undefined) => {
 export const parseOrgProvider = (org: string | undefined) => {
   if (typeof org !== "string") return "-";
 
-  return org
-    .split(" ")
-    .slice(1, org.length - 1)
-    .join(" ");
+  return org.split(" ").slice(1).join(" ");
 };
