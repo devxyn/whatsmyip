@@ -9,7 +9,7 @@ import { parseLocation } from "../utils";
 const customIcon = L.icon({
   iconUrl: "/logo.png",
   iconSize: [32, 32], // Adjust size as needed
-  iconAnchor: [20, 40], // Point of the icon which will correspond to marker's location
+  iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
   popupAnchor: [0, -40], // Point from which the popup should open relative to the iconAnchor
 });
 
