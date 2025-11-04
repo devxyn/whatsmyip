@@ -11,14 +11,30 @@ const Details = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const response: IPData = await ky.get(`https://ipinfo.io/${ip}/geo`).json();
-    setIpData(response);
+    try {
+      const response: IPData = await ky.get(`https://ipinfo.io/${ip}/geo`).json();
+      setIpData(response);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("An unknown error occurred while fetching IP data.");
+      }
+    }
   };
 
   useEffect(() => {
     const handleGetUserIp = async () => {
-      const response: IPData = await ky.get(`https://ipinfo.io/geo`).json();
-      setIpData(response);
+      try {
+        const response: IPData = await ky.get(`https://ipinfo.io/geo`).json();
+        setIpData(response);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        } else {
+          console.error("An unknown error occurred while fetching IP data.");
+        }
+      }
     };
 
     handleGetUserIp();
