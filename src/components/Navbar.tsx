@@ -8,7 +8,7 @@ const Navbar = () => {
         </a>
 
         <a className='text-xs' href='http://www.github.com/devxyn' target='_blank' rel='noopener noreferrer'>
-          Developed by: <span className='font-bold'>devxxyn</span>
+          Developed by: <span className='font-bold'>devxyn</span>
         </a>
       </nav>
     </header>
