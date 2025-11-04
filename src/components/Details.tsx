@@ -25,9 +25,12 @@ const Details = () => {
   }, [setIpData]);
 
   return (
-    <aside className='flex-1 px-10 pt-16 w-1/2'>
-      <h2 className='text-5xl font-bold mb-2'>Welcome to Find My IP</h2>
-      <p className='mb-5 text-lg text-gray-300'>
+    <aside className='w-full lg:w-1/2 flex-1 flex flex-col items-center justify-center lg:items-start px-5 xs:px-10'>
+      <h2 className='text-4xl xs:text-5xl font-bold mb-2 text-center lg:text-left'>
+        Welcome to
+        <br className='xs:hidden' /> Find My IP
+      </h2>
+      <p className='mb-5 text-sm xs:text-lg text-gray-300 text-center lg:text-left'>
         Effortlessly explore IP address information and discover locations around the world. Enter any IP address below
         to see its details and location instantly.
       </p>
@@ -45,7 +48,7 @@ const Details = () => {
         </button>
       </form>
 
-      <div className='mt-10 bg-[#1e293b] p-6 rounded-lg shadow border border-light-border max-w-lg'>
+      <div className='mt-8 xs:mt-10 bg-[#1e293b] p-6 rounded-lg shadow border border-light-border w-full xs:max-w-lg'>
         <dl className='grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3'>
           <div>
             <dt className='text-xs text-gray-400 uppercase tracking-wide'>IP Address</dt>
@@ -61,7 +64,16 @@ const Details = () => {
           </div>
           <div>
             <dt className='text-xs text-gray-400 uppercase tracking-wide'>Country</dt>
-            <dd className='text-lg text-white'>{ipData?.country || "-"}</dd>
+            <dd className='text-lg text-white flex flex-row items-center gap-2'>
+              {ipData?.country || "-"}
+              {ipData?.country && (
+                <img
+                  src={`https://assets.ipstack.com/flags/${ipData?.country?.toLowerCase()}.svg`}
+                  alt={`${ipData?.country} Flag`}
+                  className='w-8'
+                />
+              )}
+            </dd>
           </div>
           <div>
             <dt className='text-xs text-gray-400 uppercase tracking-wide'>Provider</dt>
