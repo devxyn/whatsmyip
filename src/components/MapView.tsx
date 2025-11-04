@@ -23,12 +23,12 @@ const MapUpdater = ({ lat, lng }: { lat: number; lng: number }) => {
   return null;
 };
 
-const Map = () => {
+const MapView = () => {
   const popupRef = useRef<PopupType | null>(null);
   const { ipData } = useMapContext();
   const { latitude, longitude } = parseLocation(ipData?.loc);
 
-  if (!ipData || !latitude || !longitude) {
+  if (!ipData || (latitude === 0 && longitude === 0)) {
     return <div className='w-full lg:w-1/2 flex-1 border-l border-light-border min-h-[250px]' />;
   }
 
@@ -53,4 +53,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default MapView;
