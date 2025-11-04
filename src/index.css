@@ -11,4 +11,7 @@ body {
 
 @theme {
   --color-light-border: #2e2e2e;
+  --color-primary: #1a1a1a;
+
+  --breakpoint-xs: 426px;
 }
