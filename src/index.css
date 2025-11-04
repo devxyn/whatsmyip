@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+* {
+  font-family: Karla, Inter, sans-serif;
+}
+
+body {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+@theme {
+  --color-light-border: #2e2e2e;
+}
