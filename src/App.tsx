@@ -8,7 +8,7 @@ const App = () => {
     <MapProvider>
       <main>
         <Navbar />
-        <section className='flex flex-col md:flex-row w-full h-dvh pt-[80px]'>
+        <section className='flex flex-col gap-10 lg:gap-0 lg:flex-row w-full h-full lg:h-dvh pt-8 lg:pt-[80px]'>
           <Details />
           <Map />
         </section>
