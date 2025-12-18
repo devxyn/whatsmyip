@@ -7,7 +7,7 @@ const Navbar = () => {
           <h1>Find My Ip</h1>
         </a>
 
-        <a className='text-xs' href='http://www.github.com/hermooo' target='_blank' rel='noopener noreferrer'>
+        <a className='text-xs' href='https://github.com/hermooo' target='_blank' rel='noopener noreferrer'>
           Developed by: <span className='font-bold'>hermooo</span>
         </a>
       </nav>
